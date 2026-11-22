@@ -97,5 +97,3 @@ TS=(olive OR olives OR "Olea europaea" OR "olive grove*" OR "olive orchard*") AN
 **Défi 2 : deux nouveaux synonymes pour le groupe Cible (C3).**
 - `"olive quick decline syndrome"` : nom de la maladie liée à *Xylella* en Italie, très spécifique, peu de bruit.
 - `"Spilocaea oleagina"` : nom latin de l'agent de l'œil de paon, utile car certains auteurs n'écrivent pas « peacock spot ».
-
-À tester avant adoption : vérifier combien de nouveaux records apparaissent et s'ils sont pertinents.
