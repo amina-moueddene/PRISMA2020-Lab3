@@ -88,7 +88,7 @@ def matches(included, records):
 
 
 def main():
-    included = list(csv.DictReader(INCLUDED.open(encoding="utf-8")))
+    included = list(csv.DictReader(INCLUDED.read_text(encoding="utf-8").splitlines()))
     for inc in included:
         inc["doi_n"] = norm_doi(inc["doi"])
         inc["title_n"] = norm_title(inc["title"])

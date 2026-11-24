@@ -8,6 +8,49 @@
 
 Ce dépôt documente la construction, le test et la justification de la requête utilisée dans la revue, en suivant les 15 étapes du Lab 3.
 
+![tests](https://github.com/amina-moueddene/PRISMA2020-Lab3/actions/workflows/tests.yml/badge.svg)
+
+## En bref
+
+**Technologies.** Les requêtes sont écrites dans le **langage de recherche booléen** propre à chaque base : `TITLE-ABS-KEY()` pour Scopus, `TS=()` pour WoS, `title_and_abstract.search` pour OpenAlex, `"All Metadata":` pour IEEE Xplore. Ce n'est **pas du SQL** : aucune base de données relationnelle n'est interrogée et le lab ne demande pas de SQL. **Python 3** (bibliothèque standard uniquement) sert à exécuter les requêtes dans OpenAlex, à mesurer le rappel et la précision, et à tester automatiquement la cohérence des requêtes.
+
+**Résultats clés** (OpenAlex, 24/11/2026 ; référence : les 23 rapports inclus dans la SLR) :
+
+| Version | Résultats uniques | Pertinents dans les 10 premiers | Rapports inclus retrouvés | Précision |
+|---|---:|---:|---:|---:|
+| **V1 large (retenue)** | 139 | 9/10 | **20/23** | 14,4 % |
+| V2 intermédiaire | 83 | 9/10 | 15/23 | 18,1 % |
+| V3 restrictive | 45 | 6/10 | 9/23 | 20,0 % |
+| V4 enrichie | 140 | – | 20/23 | 14,3 % |
+| V5 avec NOT | 129 | – | 19/23 | 14,7 % |
+
+Conclusion : les versions plus étroites gagnent au plus 5,6 points de précision mais perdent 5 à 11 rapports inclus. NOT fait perdre une étude incluse. Les synonymes supplémentaires n'apportent rien. **V1 est retenue.**
+
+**Correspondance étapes → fichiers**
+
+| Étape du lab | Section | Fichiers |
+|---|---|---|
+| 1–3 Question et concepts | §1–3 | `README.md` |
+| 4 Mots-clés et synonymes | §4 | `search/keywords_table.csv` |
+| 5–8 Booléens, guillemets, troncatures, groupes | §5–8 | `search/queries_*.txt`, `search/queries_openalex.json`, `tests/test_queries.py` |
+| 9 Requête V1 | §9 | `search/queries_scopus.txt`, `search/queries_wos.txt` |
+| 10 Test de la requête | §10 | `scripts/openalex_search.py`, `results/top10_relevance.csv`, `results/recall_results.csv` |
+| 11 Versions intermédiaire et restrictive | §11 | `exports/V1…V5/`, `scripts/recall_check.py`, `results/missed_reports.csv`, `results/new_vs_V1.csv` |
+| 12 Choix final et justification | §12 | `README.md` |
+| 13 Adaptation aux bases | §13 | `search/queries_scopus.txt`, `search/queries_wos.txt`, `search/queries_openalex.json`, `search/queries_ieee_acm.txt` |
+| 14 Documentation et reproductibilité | §14 | `search/search_log.csv`, `search/openalex_run_log.csv` |
+| 15 Questions et défis | §15 | `README.md` |
+
+**Exécuter**
+
+```bash
+python -m unittest discover -s tests -v                     # 17 tests, sans connexion internet
+python scripts/openalex_search.py --mailto ton@email.org    # relance les 5 requêtes dans OpenAlex
+python scripts/recall_check.py                              # recalcule rappel, précision et rapports manqués
+```
+
+Les tests vérifient : les parenthèses et guillemets équilibrés, les opérateurs en majuscules, les 4 concepts reliés par AND, que V2 et V3 sont strictement incluses dans V1, que V4 contient V1, que V5 est V1 + NOT, que V1 est identique dans Scopus et WoS, la normalisation des DOI et titres, le calcul du rappel et de la précision sur des données fictives, la construction des URL OpenAlex et la cohérence des résultats publiés. Ils sont exécutés automatiquement par GitHub Actions à chaque envoi (`.github/workflows/tests.yml`).
+
 ## Contenu du dépôt
 
 | Fichier | Rôle |
@@ -23,6 +66,13 @@ Ce dépôt documente la construction, le test et la justification de la requête
 | `data/included_reports.csv` | Les 23 rapports inclus dans la SLR (jeu de référence pour tester les requêtes) |
 | `scripts/openalex_search.py` | Exécute V1 à V5 dans OpenAlex et enregistre les résultats |
 | `scripts/recall_check.py` | Calcule résultats, rappel et précision de chaque version à partir des exports |
+| `exports/V1_large/` … `exports/V5_test_NOT/` | Résultats bruts de chaque version dans OpenAlex (DOI, titre, année ; données CC0) |
+| `results/recall_results.csv` | Résultats, rapports inclus retrouvés, rappel et précision par version |
+| `results/missed_reports.csv` | Rapports inclus manqués par chaque version |
+| `results/new_vs_V1.csv` | Enregistrements d'une version absents de V1 |
+| `results/top10_relevance.csv` | Pertinence des 10 premiers résultats de V1, V2 et V3 (étape 10), avec la source du jugement |
+| `tests/` | Tests automatiques (`python -m unittest discover -s tests`) |
+| `.github/workflows/tests.yml` | Exécution automatique des tests sur GitHub |
 | `exports/README.md` | Organisation des exports |
 
 ---
@@ -149,6 +199,18 @@ Après lecture des titres et résumés, **53/143 (37 %)** des enregistrements on
 | E4 | Pas de télédétection aérienne ou satellitaire (laboratoire, pots) | 12 | `thermal`, `hyperspectral` (aussi utilisés en laboratoire) |
 | E6 | Littérature secondaire (revues) | 11 | aucun filtre de type de document |
 
+### Pertinence des 10 premiers résultats (méthode du lab)
+
+Comme le demande l'étape 10, les 10 premiers résultats de chaque version (dans l'ordre renvoyé par OpenAlex) ont été évalués. Un résultat est jugé **pertinent** s'il a passé le tri titre/résumé de la SLR. Pour les 4 notices absentes du tri de la SLR (propres à OpenAlex), le jugement a été fait sur le titre. Détail ligne par ligne : [`results/top10_relevance.csv`](results/top10_relevance.csv).
+
+| Version | Pertinents / 10 | Non pertinents | Motifs de non-pertinence |
+|---|---:|---:|---|
+| V1 large | **9** | 1 | classification et rendement, sans maladie |
+| V2 intermédiaire | **9** | 1 | chapitre de livre (E7) |
+| V3 restrictive | **6** | 4 | livre général sur les drones, revue de littérature (E6), revue générale sur l'olivier, chapitre de livre (E7) |
+
+Taux de pertinence des 10 premiers résultats : 90 % pour V1, au-dessus du seuil de 50 % proposé par le lab. Ce test ne distingue pas V1 et V2, alors que V2 perd 5 rapports inclus : un échantillon de 10 résultats mesure la qualité de **tête de liste**, pas l'exhaustivité. C'est pourquoi le choix final repose aussi sur le rappel, mesuré sur les 23 rapports inclus (section 11).
+
 ### Lecture
 
 Le seuil de 50 % proposé dans le lab vaut pour une recherche exploratoire. Pour une **revue systématique**, la priorité est le **rappel** : une précision de 15 à 20 % est attendue et acceptable, car le tri manuel élimine le bruit, alors qu'une étude manquée par la requête est perdue définitivement. La deuxième base apporte 4 rapports inclus (3 seulement dans Scopus, 1 seulement dans WoS), ce qui justifie l'utilisation de deux bases.
@@ -194,7 +256,7 @@ Pour rappel, V1 dans Scopus + WoS (SLR) : 143 uniques, 23/23, précision 16,1 %.
 
 **V3 restrictive (9/23).** La requête « naïve » perd 11 rapports de plus que V1, dont l'étude aéroportée de référence sur *Verticillium* (Calderón 2015) et trois études satellitaires sur le stress hydrique ou la sécheresse (Garofalo 2024, Martínez-Ruedas 2026, Daiz 2026). L'explication probable est que ces études nomment leur capteur (hyperspectral, thermique, PlanetScope) ou leur algorithme (SVM, random forest) plutôt que les termes génériques gardés dans V3 ; on peut le vérifier en lisant leurs résumés. La précision ne monte qu'à 20 %.
 
-**V4 enrichie (20/23).** Les douze termes ajoutés (PlanetScope, Landsat, MODIS, "unmanned aircraft", RPAS, wilt, "quick decline", anthracnose, Colletotrichum, Spilocaea, "Pseudomonas savastanoi", "gaussian process") n'apportent qu'**un seul enregistrement unique** (140 contre 139) et **aucun rapport inclus supplémentaire**. Les études qui emploient ces termes contiennent aussi au moins un terme de V1 dans leur titre ou leur résumé : le vocabulaire de V1 est **saturé** pour ce sujet. Les trois rapports manqués restent les mêmes qu'avec V1, ce qui confirme qu'il s'agit d'un problème d'indexation dans OpenAlex et non de vocabulaire. L'enregistrement ajouté est listé dans `results/new_vs_V1.csv` (créé par `recall_check.py`).
+**V4 enrichie (20/23).** Les douze termes ajoutés (PlanetScope, Landsat, MODIS, "unmanned aircraft", RPAS, wilt, "quick decline", anthracnose, Colletotrichum, Spilocaea, "Pseudomonas savastanoi", "gaussian process") n'apportent qu'**un seul enregistrement unique** (140 contre 139) et **aucun rapport inclus supplémentaire**. Les études qui emploient ces termes contiennent aussi au moins un terme de V1 dans leur titre ou leur résumé : le vocabulaire de V1 est **saturé** pour ce sujet. Les trois rapports manqués restent les mêmes qu'avec V1, ce qui confirme qu'il s'agit d'un problème d'indexation dans OpenAlex et non de vocabulaire. L'unique enregistrement ajouté (`results/new_vs_V1.csv`) est *Ecosystem vigilance: leveraging NDVI analysis and Deep Learning for sustainable plant health management in Ziarat and Sherani districts, Balochistan, Pakistan* (préprint, 2024) : **non pertinent** ; d'après son titre, il porte sur la santé de la végétation au Baloutchistan et non sur des vergers d'oliviers.
 
 **V5 test de NOT (19/23).** Ajouter `NOT "olive oil"` retire 10 enregistrements (139 → 129) mais fait perdre **un rapport inclus** : Raouhi 2024, *Optimizing olive disease classification through transfer learning with unmanned aerial vehicle imagery*. Son titre ne parle pas d'huile ; c'est son résumé, qui situe probablement le contexte économique de l'huile d'olive, qui le fait exclure. Le gain de précision est de 0,3 point. **Le test confirme le risque décrit dans le lab** : NOT élimine des études pertinentes qui mentionnent le terme exclu dans un autre contexte.
 
