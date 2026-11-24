@@ -51,6 +51,58 @@ python scripts/recall_check.py                              # recalcule rappel, 
 
 Les tests vérifient : les parenthèses et guillemets équilibrés, les opérateurs en majuscules, les 4 concepts reliés par AND, que V2 et V3 sont strictement incluses dans V1, que V4 contient V1, que V5 est V1 + NOT, que V1 est identique dans Scopus et WoS, la normalisation des DOI et titres, le calcul du rappel et de la précision sur des données fictives, la construction des URL OpenAlex et la cohérence des résultats publiés. Ils sont exécutés automatiquement par GitHub Actions à chaque envoi (`.github/workflows/tests.yml`).
 
+## Architecture du projet & Flux méthodologique (PRISMA-S)
+
+### Arborescence du dépôt
+
+```text
+PRISMA2020-Lab3/
+├── README.md                        # Rapport méthodologique complet (Étapes 1 à 15)
+├── data/
+│   └── included_reports.csv         # Jeu de référence : 23 rapports inclus (22 études SLR)
+├── search/
+│   ├── keywords_table.csv           # Matrice Concepts → Mots-clés → Synonymes → Variantes
+│   ├── queries_scopus.txt           # Syntaxe Scopus (TITLE-ABS-KEY, V1–V5)
+│   ├── queries_wos.txt              # Syntaxe Web of Science Core Collection (TS=, V1–V5)
+│   ├── queries_ieee_acm.txt         # Adaptation IEEE Xplore & ACM Digital Library
+│   ├── queries_openalex.json        # Requêtes structurées pour l'API OpenAlex (V1–V5)
+│   ├── search_log.csv               # Journal officiel PRISMA-S (Scopus & WoS)
+│   └── openalex_run_log.csv         # Journal d'exécution automatisée (dates, URL, volumes)
+├── scripts/
+│   ├── openalex_search.py           # Interrogation reproductible de l'API OpenAlex (Python 3)
+│   └── recall_check.py              # Évaluation du rappel, de la précision et des études manquées
+├── exports/
+│   ├── V1_large/openalex.csv        # Export brut V1 (139 résultats — retenue)
+│   ├── V2_intermediaire/openalex.csv# Export brut V2 (83 résultats)
+│   ├── V3_restrictive/openalex.csv  # Export brut V3 (45 résultats)
+│   ├── V4_enrichie/openalex.csv     # Export brut V4 (140 résultats)
+│   └── V5_test_NOT/openalex.csv     # Export brut V5 avec exclusion NOT (129 résultats)
+├── results/
+│   ├── recall_results.csv           # Synthèse comparative des métriques par version
+│   ├── missed_reports.csv           # Analyse des faux négatifs par version
+│   ├── new_vs_V1.csv                # Gain marginal de la version enrichie V4
+│   └── top10_relevance.csv          # Évaluation manuelle de pertinence (Top 10)
+└── tests/
+    ├── test_queries.py              # Validation syntaxique et booléenne des requêtes
+    ├── test_openalex_search.py      # Tests unitaires du client API OpenAlex
+    └── test_recall_check.py         # Tests unitaires du calcul de rappel/précision
+```
+
+### Pipeline de construction et de validation de la requête
+
+```mermaid
+flowchart TD
+    RQ["Question de recherche (SLR)<br/>Détection des maladies et stress de l'olivier par IA & télédétection"] --> C1["Concept 1 : Culture cible<br/>(olive, Olea europaea, olive grove*)"]
+    RQ --> C2["Concept 2 : Pathologie / Stress<br/>(disease*, stress*, Xylella, Verticillium...)"]
+    RQ --> C3["Concept 3 : Capteur / Plateforme<br/>(remote sensing, UAV, multispectral...)"]
+    RQ --> C4["Concept 4 : Méthode IA / ML<br/>(machine learning, deep learning, CNN...)"]
+
+    C1 & C2 & C3 & C4 --> OR["Regroupement intra-concept avec OR<br/>+ Guillemets exacts & Troncatures (*)"]
+    OR --> AND["Combinaison inter-concepts avec AND<br/>→ Équation booléenne V1 (Large)"]
+    AND --> TEST["Tests itératifs sur OpenAlex (V1 à V5)<br/>Mesure Rappel vs Précision sur 23 études"]
+    TEST --> SELECT["Validation V1 (Rappel 87,0 % — 20/23 études)<br/>Déploiement sur Scopus & Web of Science (143 uniques)"]
+```
+
 ## Contenu du dépôt
 
 | Fichier | Rôle |
@@ -339,6 +391,28 @@ Export              : DOI, titre, année, identifiant OpenAlex (exports/<VERSION
 ```
 
 Pour reproduire les tests : `python3 scripts/openalex_search.py --mailto <e-mail>` puis `python3 scripts/recall_check.py`. OpenAlex étant mis à jour en continu, les nombres peuvent varier légèrement d'une date à l'autre ; la date et l'URL exacte de chaque exécution sont enregistrées pour cette raison.
+
+### Fiche récapitulative standardisée (PRISMA-S — Étape 14)
+
+| Critère PRISMA-S | Revue systématique (Scopus) | Revue systématique (Web of Science) | Banc de test reproductible (OpenAlex) |
+|---|---|---|---|
+| **Base / Interface** | Scopus (Elsevier) — Recherche avancée | Web of Science Core Collection (Clarivate) | OpenAlex REST API (`api.openalex.org/works`) |
+| **Date d'exécution** | 15/11/2026 | 15/11/2026 | 24/11/2026 (voir `openalex_run_log.csv`) |
+| **Champs interrogés** | `TITLE-ABS-KEY` | `TS` (Topic : titre, résumé, mots-clés) | `title_and_abstract.search` |
+| **Version de requête** | V1 Large (`search/queries_scopus.txt`) | V1 Large (`search/queries_wos.txt`) | V1 à V5 (`search/queries_openalex.json`) |
+| **Filtres appliqués** | `PUBYEAR 2013–2026` | `PY 2013–2026` | `publication_year:2013-2026` |
+| **Résultats bruts** | 118 enregistrements | 97 enregistrements | 139 enregistrements (V1) |
+| **Après dédoublonnage** | **143 enregistrements uniques** (72 doublons retirés : 70 par DOI, 2 par titre) | ← Fusionné avec Scopus | 139 uniques (dédoublonnage natif OpenAlex) |
+| **Justification** | Exhaustivité maximale (rappel 87,0 % sur jeu témoin) | Couverture complémentaire revues & conférences | Validation ouverte, gratuite et 100 % scriptée |
+
+### Prérequis et exécution des tests unitaires
+
+Aucune dépendance externe n'est requise (**Python ≥ 3.9**, bibliothèque standard uniquement : `urllib`, `json`, `csv`, `unittest`).
+
+```bash
+# Exécuter la suite complète de tests unitaires (validation syntaxique & métriques)
+python3 -m unittest discover -s tests -v
+```
 
 ## 15. Vérification : questions et défis
 
