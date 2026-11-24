@@ -1,0 +1,48 @@
+doi,title,year,openalex_id
+10.3390/a16070343,Deep Learning for Detecting Verticillium Fungus in Olive Trees: Using YOLO in UAV Imagery,2023,https://openalex.org/W4384695196
+,UAV or Drones for Remote Sensing Applications (Volume 1),2018,https://openalex.org/W2900713119
+10.1016/j.isprsjprs.2021.07.014,Discriminating Xylella fastidiosa from Verticillium dahliae infections in olive trees using thermal- and hyperspectral-based plant traits,2021,https://openalex.org/W3192010693
+10.1117/12.3037289,An insight into remote sensing solutions for monitoring the Xylella fastidiosa bacterium that is threatening olive trees: a literature review,2024,https://openalex.org/W4402504837
+,"Advances in cultivation, production technologies, and sustainable management of Olive (Olea europaea L.): A review",2026,https://openalex.org/W7220253433
+10.13140/rg.2.2.15836.76163,Disease Detection and Mapping in Olive Groves using UAVs and Deep Learning for Precision Agriculture,2025,https://openalex.org/W7220409729
+,Disease detection and mapping in olive groves using UAVs and deep learning for precision agriculture,2025,https://openalex.org/W7112960058
+10.3390/app122010278,MobiRes-Net: A Hybrid Deep Learning Model for Detecting and Classifying Olive Leaf Diseases,2022,https://openalex.org/W4304806827
+10.3390/rs17081372,Toward an Operational System for Automatically Detecting Xylella fastidiosa in Olive Groves Based on Hyperspectral and Thermal Remote Sensing Data,2025,https://openalex.org/W4409408750
+10.1007/978-3-030-88874-9_17,"Assessment of Drought Impact on Agricultural Production Using Remote Sensing and Machine Learning Techniques in Kairouan Prefecture, Tunisia",2022,https://openalex.org/W4225716252
+10.1007/978-3-031-87647-9_22,Automated Detection and Geolocation of Olive Tree Crowns in UAV Imagery Using Deep Learning,2025,https://openalex.org/W4409456923
+10.1051/bioconf/202621101006,Monitoring drought-induced degradation of olive and citrus tree crops in the Tadla plain (Morocco) with multi-sensor remote sensing,2026,https://openalex.org/W7124280695
+10.5281/zenodo.8144163,Deep Learning for Detecting Verticilium Fungus in Olive Trees Using YOLO in UAV Imagery Dataset,2023,https://openalex.org/W4393795016
+10.1051/bioconf/202621101006/pdf,Monitoring drought-induced degradation of olive and citrus tree crops in the Tadla plain (Morocco) with multi-sensor remote sensing,2026,https://openalex.org/W7124464153
+10.26262/heal.auth.ir.375191,"Οlive trees stress detection using remote sensing, spectroscopy and machine learning",2026,https://openalex.org/W7168262642
+10.1016/j.isprsjprs.2020.02.010,Detection of Xylella fastidiosa infection symptoms with airborne multispectral and thermal imagery: Assessing bandset reduction performance from hyperspectral analysis,2020,https://openalex.org/W3006993985
+10.17660/actahortic.2024.1395.4,Water stress detection in olive at the farm level using high-resolution multispectral airborne imagery: assessment against canopy temperature,2024,https://openalex.org/W4399107344
+10.3390/soilsystems9040118,Soil Management and Machine Learning Abandonment Detection in Mediterranean Olive Groves Under Drought: A Case Study from Central Spain,2025,https://openalex.org/W4415719893
+10.1002/wwp2.12243,Assessing drought stress impact on olive trees using AI and Sentinel‐2 satellite imagery,2024,https://openalex.org/W4404863756
+10.3390/rs14235947,Implementing Sentinel-2 Data and Machine Learning to Detect Plant Stress in Olive Groves,2022,https://openalex.org/W4310037025
+10.1109/iccc65605.2025.11022835,A YOLO-Based Approach for Detection of Olive Knot Disease through UAV and Computer Vision Technologies,2025,https://openalex.org/W4411173425
+10.3390/land14051001,A Machine Learning Approach to Generate High-Resolution Maps of Irrigated Olive Groves,2025,https://openalex.org/W4410082526
+10.1093/treephys/tpag097,A Systematic Review of Remote Sensing Techniques for Monitoring Pests and Diseases in Tree Crops,2026,https://openalex.org/W7168180648
+10.5281/zenodo.21978955,BLOOM - Robust and Adaptable Machine Learning for Sustainable Crop Disease Detection,2026,https://openalex.org/W7203625876
+10.1080/10106049.2025.2471104,Mapping drought severity impact on arboriculture systems over Tadla and lower Tassaout plains in Morocco using Sentinel-2 data and machine learning approaches,2025,https://openalex.org/W4408344001
+10.1371/journal.pone.0323158,Prediction of vegetation indices from down-sampled hyperspectral data using machine learning: A novel framework for olive crop monitoring,2026,https://openalex.org/W7141307443
+10.71959/cggj-jj25,Crop and forest phenotyping using remote sensing and data based approaches,2026,https://openalex.org/W7203449043
+10.64799/joiswa.v3.i2.10,Usage of Machine Learning Algorithms on Precision Agriculture Applications,2020,https://openalex.org/W3212756524
+10.11591/ijece.v14i1.pp891-903,Optimizing olive disease classification through transfer learning with unmanned aerial vehicle imagery,2024,https://openalex.org/W4388656599
+10.1007/s00484-020-02047-z,Predicting the Olea pollen concentration with a machine learning algorithm ensemble,2020,https://openalex.org/W3105759894
+10.20944/preprints202606.1229.v1,Effects of Air Particle Pollution and Weather Conditions on Diseases Associated with Olive Tree Pollen in Mascara (Algeria),2026,https://openalex.org/W7165061544
+10.64697/978-90-835589-7-4_41wc-p1951-cd,"Remote Sensing for the Study of Climate Change and Intensive Agriculture and Its Effects on an Overexploited Fossil Aquifer System, Arid Region, Atacama Desert",2025,https://openalex.org/W7118094431
+10.1007/978-3-031-49361-4_2,Olive Leaf Infection Detection Using the Cloud-Edge Continuum,2023,https://openalex.org/W4389683578
+10.1016/j.agwat.2025.109409,Variance-based sensitivity analysis of climate variability impact on crop yield using machine learning: A case study in Jordan,2025,https://openalex.org/W4409306337
+10.17660/actahortic.2024.1409.56,Hyperspectral plant traits and fluorescence emission dynamics under increasing water stress levels show diverging trends across species,2024,https://openalex.org/W4404660358
+10.3390/app15052746,Predicting Olive Tree Chlorophyll Fluorescence Using Explainable AI with Sentinel-2 Imagery in Mediterranean Environment,2025,https://openalex.org/W4408124503
+10.1016/j.atech.2025.101376,Digital and Industry 4.0 technologies in olive farming and industry: Recent applications and future outlook,2025,https://openalex.org/W4413509164
+10.63544/zh5bf906,Data Collection and Analysis Empowered with AI for Robotized Olive Oil Precision Farming,2026,https://openalex.org/W7213623910
+10.21125/edulearn.2025.0926,"AI TOOLS, SMART AGRICULTURE TECHNIQUES AND SUMMER SCHOOL COURSES DEVELOPED FOR OLIVE PRODUCTION: CASE OF THE DEEP FARM ERASMUS+ PROJECT APPLIED AT IZMIR, TURKEY",2025,https://openalex.org/W4412369685
+10.5194/egusphere-egu24-4541,Time-series analysis on multi-modal data for precisionviticulture to support adaptation to changing climate patternsin Franconia,2025,https://openalex.org/W4392616262
+10.5281/zenodo.21977830,Open-field Agriculture Pilot,2026,https://openalex.org/W7203617689
+10.2139/ssrn.4597436,Watching Cranberries: Albedo Time-Series for Vision-Based Ripening Assessment,2023,https://openalex.org/W4387447692
+10.48550/arxiv.2309.00028,Vision-Based Cranberry Crop Ripening Assessment,2023,https://openalex.org/W4386435744
+10.1117/12.2685462,TEBAKA: a technological platform for Apulian crop monitoring,2023,https://openalex.org/W4387701291
+10.1104/pp.16.00592,The quest for understanding phenotypic variation via integrated approaches in the field environment,2016,https://openalex.org/W2503058087
+10.3389/fpls.2026.1970194,Editorial: New trends in distributed and autonomous intelligent systems for crop production,2026,https://openalex.org/W7213987798
+10.14293/icc000038.v1,Preface of the International Coffee Convention 2026 (ICC2026),2026,https://openalex.org/W7214233148

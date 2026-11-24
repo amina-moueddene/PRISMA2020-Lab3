@@ -1,0 +1,43 @@
+# Scopus — Advanced search (champ TITLE-ABS-KEY)
+# STATUT : seule V1 a été exécutée (recherche de la SLR, 15/11/2026).
+# V2 à V5 sont traduites pour cette base mais NON exécutées : pas d'accès institutionnel.
+# Les tests du lab sont faits dans OpenAlex (search/queries_openalex.json).
+# Coller chaque requête telle quelle dans Scopus > Advanced document search.
+# Garder le filtre de période identique pour toutes les versions.
+
+## V1 — LARGE (requête finale de la SLR, exécutée le 15/11/2026 : 118 résultats)
+TITLE-ABS-KEY(olive OR olives OR "Olea europaea" OR "olive grove*" OR "olive orchard*")
+AND TITLE-ABS-KEY(uav* OR uas OR drone* OR "unmanned aerial" OR airborne OR aircraft OR "remote sensing" OR satellite* OR sentinel* OR hyperspectral OR multispectral OR thermal OR lidar)
+AND TITLE-ABS-KEY(disease* OR pathogen* OR xylella OR verticillium OR "olive knot" OR "peacock spot" OR infect* OR symptom* OR "water stress" OR drought OR "water status" OR stress)
+AND TITLE-ABS-KEY("machine learning" OR "deep learning" OR "artificial intelligence" OR "neural network*" OR cnn OR "random forest" OR "support vector" OR svm OR xgboost OR "gradient boosting" OR yolo OR "transfer learning" OR "discriminant analysis" OR classif*)
+AND PUBYEAR > 2012 AND PUBYEAR < 2027
+
+## V2 — INTERMÉDIAIRE (on retire les termes génériques les plus bruyants : stress, symptom*, infect*, aircraft, classif*, "discriminant analysis")
+TITLE-ABS-KEY(olive OR olives OR "Olea europaea" OR "olive grove*" OR "olive orchard*")
+AND TITLE-ABS-KEY(uav* OR uas OR drone* OR "unmanned aerial" OR airborne OR "remote sensing" OR satellite* OR sentinel* OR hyperspectral OR multispectral OR thermal OR lidar)
+AND TITLE-ABS-KEY(disease* OR pathogen* OR xylella OR verticillium OR "olive knot" OR "peacock spot" OR "water stress" OR drought OR "water status")
+AND TITLE-ABS-KEY("machine learning" OR "deep learning" OR "artificial intelligence" OR "neural network*" OR cnn OR "random forest" OR "support vector" OR svm OR xgboost OR "gradient boosting" OR yolo OR "transfer learning")
+AND PUBYEAR > 2012 AND PUBYEAR < 2027
+
+## V3 — RESTRICTIVE (termes centraux seulement)
+TITLE-ABS-KEY(olive OR "Olea europaea")
+AND TITLE-ABS-KEY(uav OR drone OR satellite OR airborne OR "remote sensing")
+AND TITLE-ABS-KEY(disease OR xylella OR verticillium OR "water stress" OR drought)
+AND TITLE-ABS-KEY("machine learning" OR "deep learning")
+AND PUBYEAR > 2012 AND PUBYEAR < 2027
+
+## V4 — ENRICHIE (défi 2 : V1 + nouveaux synonymes)
+TITLE-ABS-KEY(olive OR olives OR "Olea europaea" OR "olive grove*" OR "olive orchard*")
+AND TITLE-ABS-KEY(uav* OR uas OR drone* OR "unmanned aerial" OR "unmanned aircraft" OR rpas OR airborne OR aircraft OR "remote sensing" OR satellite* OR sentinel* OR landsat OR planetscope OR modis OR hyperspectral OR multispectral OR thermal OR lidar)
+AND TITLE-ABS-KEY(disease* OR pathogen* OR xylella OR verticillium OR wilt OR "quick decline" OR anthracnose OR colletotrichum OR spilocaea OR "Pseudomonas savastanoi" OR "olive knot" OR "peacock spot" OR infect* OR symptom* OR "water stress" OR drought OR "water status" OR stress)
+AND TITLE-ABS-KEY("machine learning" OR "deep learning" OR "artificial intelligence" OR "neural network*" OR cnn OR "random forest" OR "support vector" OR svm OR xgboost OR "gradient boosting" OR "gaussian process*" OR yolo OR "transfer learning" OR "discriminant analysis" OR classif*)
+AND PUBYEAR > 2012 AND PUBYEAR < 2027
+
+## V5 — TEST DE NOT (V1 + exclusion de "olive oil") — pour mesurer le risque de NOT, pas pour être retenue
+TITLE-ABS-KEY(olive OR olives OR "Olea europaea" OR "olive grove*" OR "olive orchard*")
+AND TITLE-ABS-KEY(uav* OR uas OR drone* OR "unmanned aerial" OR airborne OR aircraft OR "remote sensing" OR satellite* OR sentinel* OR hyperspectral OR multispectral OR thermal OR lidar)
+AND TITLE-ABS-KEY(disease* OR pathogen* OR xylella OR verticillium OR "olive knot" OR "peacock spot" OR infect* OR symptom* OR "water stress" OR drought OR "water status" OR stress)
+AND TITLE-ABS-KEY("machine learning" OR "deep learning" OR "artificial intelligence" OR "neural network*" OR cnn OR "random forest" OR "support vector" OR svm OR xgboost OR "gradient boosting" OR yolo OR "transfer learning" OR "discriminant analysis" OR classif*)
+AND NOT TITLE-ABS-KEY("olive oil")
+AND PUBYEAR > 2012 AND PUBYEAR < 2027
+# Remarque : dans Scopus l'opérateur s'écrit AND NOT.

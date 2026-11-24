@@ -1,0 +1,17 @@
+version,base,plateforme_interface,champ,editions_ou_collections,date_execution,filtres,nb_resultats,inclus_retrouves_sur_23,rappel,precision_inclus,statut,commentaire
+V1_large,Scopus,Scopus (Elsevier) - Advanced search,TITLE-ABS-KEY,Toutes,2026-11-15,PUBYEAR 2013-2026 ; aucun filtre langue/type/domaine,118,22,0.957,0.186,Exécutée (SLR),Requête finale de la SLR ; pas d'accès institutionnel au moment des tests du lab
+V1_large,Web of Science,Clarivate WoS Core Collection - Advanced search,TS,Non documentées,2026-11-15,PY 2013-2026 ; aucun filtre langue/type/domaine,97,20,0.870,0.206,Exécutée (SLR),Requête finale de la SLR ; pas d'accès institutionnel au moment des tests du lab
+V1_large,Scopus + WoS (dédoublonné),-,-,-,2026-11-15,-,143,23,1.000,0.161,Exécutée (SLR),215 enregistrements - 72 doublons
+V1_large,OpenAlex,API api.openalex.org/works,title_and_abstract,-,2026-11-24,publication_year 2013-2026,142 (139 uniques),20,0.870,0.144,Exécutée,Référence de comparaison dans OpenAlex
+V2_intermediaire,OpenAlex,API api.openalex.org/works,title_and_abstract,-,2026-11-24,publication_year 2013-2026,85 (83 uniques),15,0.652,0.181,Exécutée,
+V3_restrictive,OpenAlex,API api.openalex.org/works,title_and_abstract,-,2026-11-24,publication_year 2013-2026,47 (45 uniques),9,0.391,0.200,Exécutée,
+V4_enrichie,OpenAlex,API api.openalex.org/works,title_and_abstract,-,2026-11-24,publication_year 2013-2026,143 (140 uniques),20,0.870,0.143,Exécutée,Défi 2
+V5_test_NOT,OpenAlex,API api.openalex.org/works,title_and_abstract,-,2026-11-24,publication_year 2013-2026,132 (129 uniques),19,0.826,0.147,Exécutée,Test du risque de NOT
+V2_intermediaire,Scopus,-,-,-,-,-,-,-,-,-,Non exécutée,Pas d'accès institutionnel ; requête traduite dans search/queries_scopus.txt
+V2_intermediaire,Web of Science,-,-,-,-,-,-,-,-,-,Non exécutée,Pas d'accès institutionnel ; requête traduite dans search/queries_wos.txt
+V3_restrictive,Scopus,-,-,-,-,-,-,-,-,-,Non exécutée,Pas d'accès institutionnel ; requête traduite dans search/queries_scopus.txt
+V3_restrictive,Web of Science,-,-,-,-,-,-,-,-,-,Non exécutée,Pas d'accès institutionnel ; requête traduite dans search/queries_wos.txt
+V4_enrichie,Scopus,-,-,-,-,-,-,-,-,-,Non exécutée,Pas d'accès institutionnel ; requête traduite dans search/queries_scopus.txt
+V4_enrichie,Web of Science,-,-,-,-,-,-,-,-,-,Non exécutée,Pas d'accès institutionnel ; requête traduite dans search/queries_wos.txt
+V5_test_NOT,Scopus,-,-,-,-,-,-,-,-,-,Non exécutée,Pas d'accès institutionnel ; requête traduite dans search/queries_scopus.txt
+V5_test_NOT,Web of Science,-,-,-,-,-,-,-,-,-,Non exécutée,Pas d'accès institutionnel ; requête traduite dans search/queries_wos.txt

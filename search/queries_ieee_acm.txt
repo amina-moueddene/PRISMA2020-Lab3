@@ -1,0 +1,23 @@
+# Adaptation à IEEE Xplore et ACM Digital Library (étape 13)
+# Ces deux bases n'ont PAS été interrogées dans la SLR (limite déclarée dans le manuscrit).
+# Les requêtes ci-dessous sont la traduction de V1 ; la syntaxe doit être vérifiée dans l'interface au moment de l'exécution.
+
+## IEEE Xplore — Advanced Search > Command Search
+# Champ "All Metadata" = titre, résumé, mots-clés, termes d'indexation.
+# Attention : IEEE Xplore limite le nombre de jokers (*) par requête et le nombre de termes ;
+# si la requête est refusée, remplacer les troncatures par les formes explicites (ex. drone* -> drone OR drones).
+("All Metadata":olive OR "All Metadata":"Olea europaea")
+AND ("All Metadata":UAV OR "All Metadata":drone OR "All Metadata":"unmanned aerial" OR "All Metadata":airborne OR "All Metadata":"remote sensing" OR "All Metadata":satellite OR "All Metadata":Sentinel OR "All Metadata":hyperspectral OR "All Metadata":multispectral OR "All Metadata":thermal OR "All Metadata":LiDAR)
+AND ("All Metadata":disease OR "All Metadata":pathogen OR "All Metadata":Xylella OR "All Metadata":Verticillium OR "All Metadata":infection OR "All Metadata":symptom OR "All Metadata":"water stress" OR "All Metadata":drought OR "All Metadata":stress)
+AND ("All Metadata":"machine learning" OR "All Metadata":"deep learning" OR "All Metadata":"artificial intelligence" OR "All Metadata":"neural network" OR "All Metadata":CNN OR "All Metadata":"random forest" OR "All Metadata":SVM OR "All Metadata":YOLO OR "All Metadata":classification)
+# Filtre : Publication Year 2013–2026 (panneau de gauche).
+
+## ACM Digital Library — Advanced Search > "Edit Search" (syntaxe par champs)
+# ACM gère mal les longues listes de troncatures ; on utilise les formes explicites et les facettes pour la période.
+Abstract:(olive OR "Olea europaea")
+AND Abstract:(UAV OR drone OR airborne OR "remote sensing" OR satellite OR Sentinel OR hyperspectral OR multispectral OR thermal)
+AND Abstract:(disease OR pathogen OR Xylella OR Verticillium OR infection OR "water stress" OR drought OR stress)
+AND Abstract:("machine learning" OR "deep learning" OR "artificial intelligence" OR "neural network" OR CNN OR "random forest" OR SVM OR classification)
+# Filtre : Publication Date 2013–2026 ; Content type : Research article.
+# Remarque : un seul rapport inclus dans la SLR est publié chez ACM (Kallel 2022, doi 10.1145/3531056.3531070) ;
+# il a été retrouvé via Scopus/WoS, ce qui indique un apport probablement faible de l'ACM DL pour ce sujet.

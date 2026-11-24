@@ -1,0 +1,21 @@
+# Web of Science Core Collection — Advanced search (champ TS = Topic : titre, résumé, mots-clés auteur, Keywords Plus)
+# STATUT : seule V1 a été exécutée (recherche de la SLR, 15/11/2026).
+# V2 à V5 sont traduites pour cette base mais NON exécutées : pas d'accès institutionnel.
+# Les tests du lab sont faits dans OpenAlex (search/queries_openalex.json).
+# Différences avec Scopus : TS= au lieu de TITLE-ABS-KEY, PY=(2013-2026) au lieu de PUBYEAR, NOT au lieu de AND NOT.
+# Noter les éditions de la Core Collection cochées (ex. SCI-EXPANDED, SSCI, ESCI, CPCI-S) dans search_log.csv.
+
+## V1 — LARGE (requête finale de la SLR, exécutée le 15/11/2026 : 97 résultats)
+TS=(olive OR olives OR "Olea europaea" OR "olive grove*" OR "olive orchard*") AND TS=(UAV* OR UAS OR drone* OR "unmanned aerial" OR airborne OR aircraft OR "remote sensing" OR satellite* OR Sentinel* OR hyperspectral OR multispectral OR thermal OR LiDAR) AND TS=(disease* OR pathogen* OR Xylella OR Verticillium OR "olive knot" OR "peacock spot" OR infect* OR symptom* OR "water stress" OR drought OR "water status" OR stress) AND TS=("machine learning" OR "deep learning" OR "artificial intelligence" OR "neural network*" OR CNN OR "random forest" OR "support vector" OR SVM OR XGBoost OR "gradient boosting" OR YOLO OR "transfer learning" OR "discriminant analysis" OR classif*) AND PY=(2013-2026)
+
+## V2 — INTERMÉDIAIRE
+TS=(olive OR olives OR "Olea europaea" OR "olive grove*" OR "olive orchard*") AND TS=(UAV* OR UAS OR drone* OR "unmanned aerial" OR airborne OR "remote sensing" OR satellite* OR Sentinel* OR hyperspectral OR multispectral OR thermal OR LiDAR) AND TS=(disease* OR pathogen* OR Xylella OR Verticillium OR "olive knot" OR "peacock spot" OR "water stress" OR drought OR "water status") AND TS=("machine learning" OR "deep learning" OR "artificial intelligence" OR "neural network*" OR CNN OR "random forest" OR "support vector" OR SVM OR XGBoost OR "gradient boosting" OR YOLO OR "transfer learning") AND PY=(2013-2026)
+
+## V3 — RESTRICTIVE
+TS=(olive OR "Olea europaea") AND TS=(UAV OR drone OR satellite OR airborne OR "remote sensing") AND TS=(disease OR Xylella OR Verticillium OR "water stress" OR drought) AND TS=("machine learning" OR "deep learning") AND PY=(2013-2026)
+
+## V4 — ENRICHIE (défi 2)
+TS=(olive OR olives OR "Olea europaea" OR "olive grove*" OR "olive orchard*") AND TS=(UAV* OR UAS OR drone* OR "unmanned aerial" OR "unmanned aircraft" OR RPAS OR airborne OR aircraft OR "remote sensing" OR satellite* OR Sentinel* OR Landsat OR PlanetScope OR MODIS OR hyperspectral OR multispectral OR thermal OR LiDAR) AND TS=(disease* OR pathogen* OR Xylella OR Verticillium OR wilt OR "quick decline" OR anthracnose OR Colletotrichum OR Spilocaea OR "Pseudomonas savastanoi" OR "olive knot" OR "peacock spot" OR infect* OR symptom* OR "water stress" OR drought OR "water status" OR stress) AND TS=("machine learning" OR "deep learning" OR "artificial intelligence" OR "neural network*" OR CNN OR "random forest" OR "support vector" OR SVM OR XGBoost OR "gradient boosting" OR "gaussian process*" OR YOLO OR "transfer learning" OR "discriminant analysis" OR classif*) AND PY=(2013-2026)
+
+## V5 — TEST DE NOT
+(TS=(olive OR olives OR "Olea europaea" OR "olive grove*" OR "olive orchard*") AND TS=(UAV* OR UAS OR drone* OR "unmanned aerial" OR airborne OR aircraft OR "remote sensing" OR satellite* OR Sentinel* OR hyperspectral OR multispectral OR thermal OR LiDAR) AND TS=(disease* OR pathogen* OR Xylella OR Verticillium OR "olive knot" OR "peacock spot" OR infect* OR symptom* OR "water stress" OR drought OR "water status" OR stress) AND TS=("machine learning" OR "deep learning" OR "artificial intelligence" OR "neural network*" OR CNN OR "random forest" OR "support vector" OR SVM OR XGBoost OR "gradient boosting" OR YOLO OR "transfer learning" OR "discriminant analysis" OR classif*)) NOT TS=("olive oil") AND PY=(2013-2026)

@@ -1,0 +1,11 @@
+version,base,nb_resultats,inclus_retrouves,nb_inclus_reference,rappel,precision
+V1_large,OpenAlex,142,20,23,0.870,0.141
+V1_large,OpenAlex (dédoublonné),139,20,23,0.870,0.144
+V2_intermediaire,OpenAlex,85,15,23,0.652,0.176
+V2_intermediaire,OpenAlex (dédoublonné),83,15,23,0.652,0.181
+V3_restrictive,OpenAlex,47,9,23,0.391,0.191
+V3_restrictive,OpenAlex (dédoublonné),45,9,23,0.391,0.200
+V4_enrichie,OpenAlex,143,20,23,0.870,0.140
+V4_enrichie,OpenAlex (dédoublonné),140,20,23,0.870,0.143
+V5_test_NOT,OpenAlex,132,19,23,0.826,0.144
+V5_test_NOT,OpenAlex (dédoublonné),129,19,23,0.826,0.147
